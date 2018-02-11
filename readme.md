@@ -37,7 +37,7 @@ var methds =
 
 // ----------------------------------------------
 
-var lazybindall = require ("lazybindall")
+var lazybindall = require ("@sourcevault/lazybindall")
 
 var bound = lazybindall ( foo , methds )
 
@@ -74,6 +74,3 @@ bound.show() // {name:"sourcevault"}
 - Code released under MIT Licence, see [LICENSE](https://github.com/sourcevault/lazybindall/blob/master/LICENCE) for details.
 
 - Documentation released using CC-BY-4.0 see [LICENSE](https://github.com/sourcevault/lazybindall/blob/master/images/LICENCE) for details.
-
-
-
