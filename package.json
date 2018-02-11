@@ -6,9 +6,9 @@
     "livescript",
     "utility"
   ],
-  "homepage": "https://github.com/sourcevault/lazyBindall",
+  "homepage": "https://github.com/sourcevault/lazybindall",
   "bugs": {
-    "url": "https://github.com/sourcevault/lazyBindall/issues"
+    "url": "https://github.com/sourcevault/lazybindall/issues"
   },
   "license": "MIT",
   "main": "dist/main.js",
@@ -17,11 +17,8 @@
     "url": "https://github.com/sourcevault/lazybindall.git"
   },
   "description": "like bindall but lazy ¯\\_(ツ)_/¯",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "devDependencies": {
     "livescript": "1.5.0"
-  },
-  "scripts": {
-    "test": "node test.js"
   }
 }
