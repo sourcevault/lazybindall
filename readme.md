@@ -6,10 +6,6 @@
 ```
 - npm install lazybindall
 
-- npm install sourcevault/lazybindall
-
-- npm install gitlab:sourcevault/lazybindall
-
 - npm install @sourcevault/lazybindall
 ```
 
@@ -50,139 +46,6 @@ bound.show() // {name:"sourcevault"}
 ```
 
 
-## Let Me Explain ..
-
-### Relevant Background
-
-Locking context in Javascript can **only** happen through closures:
-
-```javascript
-
-var foo = function (x)
-{
-  this.bar += x 
-}
-
-lockFoo = function (context)
-{
-  return function (x) 
-  {
-    foo.call (context,x) // context gets captured in the outer context
-  }
-}  
-
-state = {bar:1}
-
-lockedFoo = lockFoo (state) 
-
-lockedFoo(3)
-
-console.log (state) // {bar:4}
-
-```
-
-The functionality expressed above is well encapculated in the `.bind` method that every function in javascript can call upon to lock context.
-
-We can use `bind`  to create `bindall` which is just a for loop for applying bind for multiple functions.
-
-The usecase for `bindall` is apparent when large number of methods with  internal state dependency require exporting. The issue arises due to the consumer having liberty to attach any exported function to external objects causing **mutation** to the internal `.this` variable - breaking any internal code that depends on `.this` staying invariant.
-
-```javascript
-
-// ./largeApi.js
-
-// What a potential large API surface looks like 
-
-Ob = function()
-{
-  this.resultList = [] 
-
-  return (this)
-}
-
-Ob.prototype.f1 = function()
-{
-  var sum = 0
-  // .... /
-  this.resultList.push( sum )
-  // .... /
-  return (this)
-}
-
-Ob.prototype.f2 = function(){// .... /}
-
-Ob.prototype.f3 = function(){// .... /}
-
-  // .... /
-  // .... /
-  // .... /
-
-Ob.prototype.f100 = function(){// .... /}
-
-module.exports = Ob
-
-```
-
-
-
-
-```javascript
-
-// test.js
-
-var api = require ("./largeApi")
-
-var _ = require ("underscore")
-
-var instance = new api()
-
-var boundApi = _.bindAll(instance)
-
-setTimeout (boundApi.f1,1000) // [1] runs fine 
-
-setTimeout (instance.f1,1000) 
-
-// [2] TypeError: Cannot read property 'push' of undefined
-
-// [2] ofcourse V8 vomited an error since .this of api.f1 points to global 
-
-
-```
-
-**ADDITIONAL  READING:**
-
-
-- `underscore.js`'s [original implementation](https://github.com/jashkenas/underscore/blob/5c237a7c682fb68fd5378203f0bf22dce1624854/underscore.js#L799-L807) of `bindAll`. 
-
-- Michael Fogus's book ["*Introducting Functional Programming with Underscore.js*"](http://shop.oreilly.com/product/0636920028857.do) has more details involing functional design patterns invovling `bindall`. 
-
-- [Here is my take](https://github.com/sourcevault/bindall) on `bindAll`  
-
-### Why Be Lazy ?
-
-Using `bindAll` is perfectly fine for most application but we should pay attention regarding what is happening at the margins. `.bindALl` is making a copy of the data structure representing our module. If Fig 1 is the data structure showing our module, then `bindAll` is making a modified copy  (copy not shown in Fig 1).
-
-![](images/single.jpg)
-**Fig 1** is a graphical representation of the data structure of large exported module with internal state stored in an object.
-
-The inefficiency in constantly making clones becomes more apparent when we consider the fact that the consumer might be interested in making *n* instances each attached to some unique object (Fig 2).
-
-![](images/many.jpg)
-**Fig 2** - *n* instances with **unique** object (state) for each instance. 
-(`bindall` clone not shown)
-
-Its not difficult to see how this core operation applied to each module layer could quickly cause memory issues. APIs involving the DOM have large surface area for **each** document object
-(ie. onclick,onhover,onmouseover ...).
-
-There is something we notice when handling large APIs, that can give us clue as to how we can optimize - we *never* use **all** possible methods for each instance (Fig 3). The reason we expose large API surfaces in the first place is to expose all **possible** functionalities, so that it works under varied use, even as creator we do not expect complete method utilization at every use - this is where it pays to be lazy. 
-
-![](images/many2.jpg)
-**Fig 3** - In practice most methods calls will be sparsely distributed - `bindall` makes more sense for small APIs with dense use, however lazy binding works in both cases.
-
-What we could do instead of an eagar `bindAll` is to only `bind` when our function leaves the comfort of its parent object. 
-
-We can do this by taking advantage of ES6 proxy getter hooks to lock context - instead of retroactively binding and **then** exporting it.
-
 ### Benchmark 
 
 *...for 10,000 object with 9 methods*
@@ -193,13 +56,8 @@ We can do this by taking advantage of ES6 proxy getter hooks to lock context - i
 | lazy  closure    |                  9|                   54|
 | eagar closure    |                 49|                6,172|
 
-**NOTES:**
-- will be interesting to see how benchmark values change against *increasing* number of methods.
-
-- `.prototype` is always going to be fastest because there is **no** closure creation - so state cannot be even passed to the event loop. It helps create a lower bound.
-
-- Time and memory is related for our benchmark since we are are keeping CPU intensive tasks constant, hence it can be assumed that time is a reflection of how long it takes the system to allocate memory. Using eagar closures we not only have to pay a memory penalty but also a time penalty.
-
+|[.. view detailed documentation ..](https://github.com/sourcevault/lazybindall/tree/master) 
+| --- |
 
 ### TODO
 
@@ -215,7 +73,7 @@ We can do this by taking advantage of ES6 proxy getter hooks to lock context - i
  
 - Code released under MIT Licence, see [LICENSE](https://github.com/sourcevault/lazybindall/blob/master/LICENCE) for details.
 
-- Documentation and Images released using CC-BY-4.0 see [LICENSE](https://github.com/sourcevault/lazybindall/blob/master/images/LICENCE) for details.
+- Documentation released using CC-BY-4.0 see [LICENSE](https://github.com/sourcevault/lazybindall/blob/master/images/LICENCE) for details.
 
 
 
