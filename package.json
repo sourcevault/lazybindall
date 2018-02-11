@@ -6,9 +6,9 @@
     "livescript",
     "utility"
   ],
-  "homepage": "https://github.com/sourcevault/lazyBindall",
+  "homepage": "https://github.com/sourcevault/lazybindall",
   "bugs": {
-    "url": "https://github.com/sourcevault/lazyBindall/issues"
+    "url": "https://github.com/sourcevault/lazybindall/issues"
   },
   "license": "MIT",
   "main": "dist/main.js",
