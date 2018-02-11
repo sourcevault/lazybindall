@@ -213,9 +213,9 @@ We can do this by taking advantage of ES6 proxy getter hooks to lock context - i
 
 ## License
  
-- Code released under MIT Licence, see [LICENSE](https://github.com/sourcevault/lazybindall/blob/master/LICENCE) for details.
+- Code released under MIT Licence, see [LICENSE](https://gitlab.com/sourcevault/lazybindall/blob/master/LICENCE) for details.
 
-- Documentation and Images released using CC-BY-4.0 see [LICENSE](https://github.com/sourcevault/lazybindall/blob/master/images/LICENCE) for details.
+- Documentation and Images released using CC-BY-4.0 see [LICENSE](https://gitlab.com/sourcevault/lazybindall/blob/master/images/LICENCE) for details.
 
 
 

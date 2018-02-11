@@ -10,16 +10,14 @@ keywords:
 
   "bindall"
 
-homepage:"https://github.com/sourcevault/lazybindall"
+homepage:"https://gitlab.com/sourcevault/lazybindall"
 
 bugs:
-  url:"https://github.com/sourcevault/lazybindall/issues"
+  url:"https://gitlab.com/sourcevault/lazybindall/issues"
 
 license:"MIT"
 
 main:"dist/main.js"
-
-repository:"github:sourcevault/lazybindall"
 
 repository:"gitlab:sourcevault/lazybindall"
 
