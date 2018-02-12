@@ -1,7 +1,5 @@
 [![Build Status](https://travis-ci.org/sourcevault/lazybindall.svg?branch=master)](https://travis-ci.org/sourcevault/lazybindall)
 
-![](https://raw.githubusercontent.com/sourcevault/lazybindall/master/images/logo.jpg)
-
 **Install Using Any ..**
 ```
 - npm install lazybindall
