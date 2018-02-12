@@ -60,24 +60,24 @@ Locking context in Javascript can **only** happen through closures:
 
 var foo = function (x)
 {
-  this.bar += x 
+  this.value += x 
 }
 
-lockFoo = function (context)
+lockFoo = function (state) // <- state is captured in the inner function
 {
   return function (x) 
   {
-    foo.call (context,x) // context gets captured in the outer context
+    foo.call (state,x) // state gets captured from the outer function 
   }
 }  
 
-state = {bar:1}
+state = {value:1}
 
 lockedFoo = lockFoo (state) 
 
 lockedFoo(3)
 
-console.log (state) // {bar:4}
+console.log (state) // {value:4}
 
 ```
 
@@ -152,15 +152,15 @@ setTimeout (instance.f1,1000)
 **ADDITIONAL  READING:**
 
 
-- `underscore.js`'s [original implementation](https://github.com/jashkenas/underscore/blob/5c237a7c682fb68fd5378203f0bf22dce1624854/underscore.js#L799-L807) of `bindAll`. 
+- `underscore.js`'s [original implementation](https://github.com/jashkenas/underscore/blob/5c237a7c682fb68fd5378203f0bf22dce1624854/underscore.js#L799-L807) of `bindall`. 
 
 - Michael Fogus's book ["*Introducting Functional Programming with Underscore.js*"](http://shop.oreilly.com/product/0636920028857.do) has more details involing functional design patterns invovling `bindall`. 
 
-- [Here is my take](https://github.com/sourcevault/bindall) on `bindAll`  
+- [Here is my take](https://github.com/sourcevault/bindall) on `bindall`  
 
 ### Why Be Lazy ?
 
-Using `bindAll` is perfectly fine for most application but we should pay attention regarding what is happening at the margins. `.bindALl` is making a copy of the data structure representing our module. If Fig 1 is the data structure showing our module, then `bindAll` is making a modified copy  (copy not shown in Fig 1).
+Using `bindall` is perfectly fine for most application but we should pay attention regarding what is happening at the margins. `.bindall` is making a copy of the data structure representing our module. If Fig 1 is the data structure showing our module, then `bindall` is making a modified copy  (copy not shown in Fig 1).
 
 ![](images/single.jpg)
 **Fig 1** is a graphical representation of the data structure of large exported module with internal state stored in an object.
@@ -179,7 +179,7 @@ There is something we notice when handling large APIs, that can give us clue as 
 ![](images/many2.jpg)
 **Fig 3** - In practice most methods calls will be sparsely distributed - `bindall` makes more sense for small APIs with dense use, however lazy binding works in both cases.
 
-What we could do instead of an eagar `bindAll` is to only `bind` when our function leaves the comfort of its parent object. 
+What we could do instead of an eagar `bindall` is to only `bind` when our function leaves the comfort of its parent object. 
 
 We can do this by taking advantage of ES6 proxy getter hooks to lock context - instead of retroactively binding and **then** exporting it.
 
@@ -198,7 +198,7 @@ We can do this by taking advantage of ES6 proxy getter hooks to lock context - i
 
 - `.prototype` is always going to be fastest because there is **no** closure creation - so state cannot be even passed to the event loop. It helps create a lower bound.
 
-- Time and memory is related for our benchmark since we are are keeping CPU intensive tasks constant, hence it can be assumed that time is a reflection of how long it takes the system to allocate memory. Using eagar closures we not only have to pay a memory penalty but also a time penalty.
+- Time and memory is related for our benchmark since we are are keeping CPU intensive tasks constant, hence it can be assumed that time is a reflection of how long it takes the system to allocate memory, giving eagar closures *both* a memory, and time penalty.
 
 - benchmark source is `src/benchmark.ls`, run using `node dist/benchmark.js`
 
