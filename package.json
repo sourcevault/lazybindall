@@ -2,9 +2,9 @@
   "name": "lazybindall",
   "author": "joykrishnamondal <jm12752@bris.ac.uk>",
   "keywords": [
-    "bindall",
     "livescript",
-    "utility"
+    "utility",
+    "bindall"
   ],
   "homepage": "https://github.com/sourcevault/lazybindall",
   "bugs": {
@@ -12,16 +12,15 @@
   },
   "license": "MIT",
   "main": "dist/main.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sourcevault/lazybindall.git"
-  },
+  "repository": "github:sourcevault/lazybindall",
   "description": "like bindall but lazy ¯\\_(ツ)_/¯",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "devDependencies": {
-    "livescript": "1.5.0"
+    "livescript": "1.5.0",
+    "comma-number": "2.0.0",
+    "@sourcevault/bindall": "0.3.1"
   },
   "scripts": {
-    "test": "node test.js"
+    "test": "node dist/test.js"
   }
 }

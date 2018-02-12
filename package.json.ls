@@ -23,7 +23,7 @@ repository:"github:sourcevault/lazybindall"
 
 description : "like bindall but lazy ¯\\_(ツ)_/¯"
 
-version : "0.0.2"
+version : "0.0.4"
 
 devDependencies:
 
