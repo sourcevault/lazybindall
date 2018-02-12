@@ -200,6 +200,10 @@ We can do this by taking advantage of ES6 proxy getter hooks to lock context - i
 
 - Time and memory is related for our benchmark since we are are keeping CPU intensive tasks constant, hence it can be assumed that time is a reflection of how long it takes the system to allocate memory. Using eagar closures we not only have to pay a memory penalty but also a time penalty.
 
+- benchmark source is `src/benchmark.ls`, run using `node dist/benchmark.js`
+
+- hardware used - `i7-3667U CPU (2 GHz 2.5 GHz), (x64, 7.86 RAM)`
+
 
 ### TODO
 
