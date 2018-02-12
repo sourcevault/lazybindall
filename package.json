@@ -17,7 +17,7 @@
     "url": "https://github.com/sourcevault/lazybindall.git"
   },
   "description": "like bindall but lazy ¯\\_(ツ)_/¯",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "devDependencies": {
     "livescript": "1.5.0"
   }
