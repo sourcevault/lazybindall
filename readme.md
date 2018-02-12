@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/sourcevault/lazybindall.svg?branch=master)](https://travis-ci.org/sourcevault/lazybindall)
 
-![](https://github.com/sourcevault/lazybindall/blob/master/images/logo.jpg)
+![](https://raw.githubusercontent.com/sourcevault/lazybindall/master/images/logo.jpg)
 
 **Install Using Any ..**
 ```
