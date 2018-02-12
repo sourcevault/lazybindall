@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/sourcevault/lazybindall.svg?branch=master)](https://travis-ci.org/sourcevault/lazybindall)
 
-![](images/logo.jpg)
+![](https://github.com/sourcevault/lazybindall/blob/master/images/logo.jpg)
 
 **Install Using Any ..**
 ```
@@ -58,12 +58,6 @@ bound.show() // {name:"sourcevault"}
 
 |[.. view detailed documentation ..](https://github.com/sourcevault/lazybindall/tree/master) 
 | --- |
-
-### TODO
-
-- More user friendly API simarly to `sourcevault/bindall`
-
-- `most.js` integration
 
 ### Updates and API change
 
