@@ -19,7 +19,7 @@
 lazybindall  :: ( ob , methds ) -> obmethds
 ``` 
 
--  `ob <Object>`  -  Methods in `methds` get bound to `Ob`.
+-  `ob <Object>`  -  Methods in `methds` get bound to `ob`.
 
 -  `methds <Object>` - Object with props *that are methods* that we want to lock to `ob`
 
@@ -160,7 +160,7 @@ setTimeout (instance.f1,1000)
 
 ### Why Be Lazy ?
 
-Using `bindall` is perfectly fine for most application but we should pay attention regarding what is happening at the margins. `.bindall` is making a copy of the data structure representing our module. If Fig 1 is the data structure showing our module, then `bindall` is making a modified copy  (copy not shown in Fig 1).
+Using `bindall` is perfectly fine for most application but pay attention to what happens at the margins. `bindall` is making a copy of the data structure representing our module. If Fig 1 is the data structure showing our module, then `bindall` is making a modified copy  (copy not shown in Fig 1).
 
 ![](images/single.jpg)
 **Fig 1** is a graphical representation of the data structure of large exported module with internal state stored in an object.
@@ -172,12 +172,12 @@ The inefficiency in constantly making clones becomes more apparent when we consi
 (`bindall` clone not shown)
 
 Its not difficult to see how this core operation applied to each module layer could quickly cause memory issues. APIs involving the DOM have large surface area for **each** document object
-(ie. onclick,onhover,onmouseover ...).
+(ie. onclick, onhover, onmouseover ...).
 
-There is something we notice when handling large APIs, that can give us clue as to how we can optimize - we *never* use **all** possible methods for each instance (Fig 3). The reason we expose large API surfaces in the first place is to expose all **possible** functionalities, so that it works under varied use, even as creator we do not expect complete method utilization at every use - this is where it pays to be lazy. 
+There is something we notice when handling large APIs, that can give us clue as to how we can optimize - we *rarely* use **all** possible methods for each instance (Fig 3). The reason we expose large API surfaces is to expose all **possible** functionalities, so that it works under varied use, even as creator we do not expect complete method utilization at every use - this is where it pays to be lazy. 
 
 ![](images/many2.jpg)
-**Fig 3** - In practice most methods calls will be sparsely distributed - `bindall` makes more sense for small APIs with dense use, however lazy binding works in both cases.
+**Fig 3** - In practice most methods calls will be sparsely distributed - `bindall` makes more sense for small APIs with dense use, while lazy binding allocates memory only when required.
 
 What we could do instead of an eagar `bindall` is to only `bind` when our function leaves the comfort of its parent object. 
 
