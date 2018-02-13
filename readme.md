@@ -8,7 +8,7 @@
 
 - npm install sourcevault/lazybindall
 
-- npm install gitlab:sourcevault/lazybindall
+- npm install gitlabs:ourcevault/lazybindall
 
 - npm install @sourcevault/lazybindall
 ```
@@ -171,10 +171,10 @@ The inefficiency in constantly making clones becomes more apparent when we consi
 **Fig 2** - *n* instances with **unique** object (state) for each instance. 
 (`bindall` clone not shown)
 
-Its not difficult to see how this core operation applied to each module layer could quickly cause memory issues. APIs involving the DOM have large surface area for **each** document object
+It's not difficult to see how applying `bindall` to each module layer could quickly cause memory issues. APIs involving the DOM have large surface area for **each** document object
 (ie. onclick, onhover, onmouseover ...).
 
-There is something we notice when handling large APIs, that can give us clue as to how we can optimize - we *rarely* use **all** possible methods for each instance (Fig 3). The reason we expose large API surfaces is to expose all **possible** functionalities, so that it works under varied use, even as creator we do not expect complete method utilization at every use - this is where it pays to be lazy. 
+There is something we notice when handling large APIs, that can give us a clue as to how we can optimize - we *rarely* use **all** possible methods for each instance (Fig 3). The reason we expose large API surfaces is to expose all **possible** functionalities, so that it works under varied use, even as creator we do not expect complete method utilization at every use - this is where it pays to be lazy. 
 
 ![](images/many2.jpg)
 **Fig 3** - In practice most methods calls will be sparsely distributed - `bindall` makes more sense for small APIs with dense use, while lazy binding allocates memory only when required.
